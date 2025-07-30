@@ -422,7 +422,4 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 *Empowering organizations with intelligent, context-aware AI assistance*
 
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-black?style=social&logo=github)](https://github.com/satyaki-mitra)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=social&logo=linkedin)](https://linkedin.com/in/your-profile)
-
 </div>

@@ -11,7 +11,7 @@
 
 **Enterprise-Grade Retrieval-Augmented Generation Chatbot for Intelligent Organization Assistance**
 
-[🚀 Features](#-key-features) • [📋 Installation](#-installation) • [🏗️ Architecture](#️-architecture) • [📚 Documentation](#-api-documentation) • [⚡ Quick Start](#-quick-start) • [🧪 Evaluation](#-evaluation)
+[🚀 Features](#-key-features) • [📋 Installation](#-installation) • [🏗️ Architecture](#️-architecture) • [📚 Documentation](#-api-documentation) • [⚡ Quick Start](#-quick-start)
 
 ---
 

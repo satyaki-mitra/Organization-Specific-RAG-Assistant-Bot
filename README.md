@@ -161,17 +161,6 @@ python -c "import nltk; nltk.download('punkt')"
 # Download spaCy model
 python -m spacy download en_core_web_sm
 ```
-
-### 🐳 Docker Deployment
-
-```bash
-# Build the Docker image
-docker build -t rag-assistant .
-
-# Run the container
-docker run -p 8000:8000 -p 8501:8501 rag-assistant
-```
-
 ---
 
 ## ⚡ Quick Start

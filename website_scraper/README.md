@@ -40,7 +40,7 @@ This project demonstrates a complete web scraping solution built with **Scrapy**
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/website-scraper.git
+git clone https://github.com/satyaki-mitra/website-scraper.git
 cd website-scraper
 
 # Install dependencies

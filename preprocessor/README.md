@@ -1,19 +1,35 @@
-# Web Content Preprocessor
+# 🌐 Web Content Preprocessor
 
-A modular preprocessing pipeline for handling messy, repetitive web data and converting it into structured chunks for further processing. This package is designed to clean, deduplicate, categorize, and chunk web content efficiently.
+---
 
-## Features
+>> **A modular, high-performance preprocessing pipeline for cleaning and structuring messy, repetitive, or unstructured web data into high-quality, categorized, deduplicated chunks ready for downstream analysis or machine learning.**
 
-- **Text Cleaning**: Remove noise patterns, URLs, emails, and normalize formatting
-- **Language Detection**: Automatically detect and filter content by language
-- **Named Entity Recognition**: Extract organizations, persons, locations, and products
-- **Content Categorization**: Automatically categorize content (Services, Industries, Company, etc.)
-- **Topic Extraction**: Extract meaningful topics from titles, URLs, and content
-- **Intelligent Chunking**: Split content into overlapping chunks with validation
-- **Deduplication**: Remove duplicate content using content hashing
-- **Tag Extraction**: Extract relevant tags from content and URL patterns
 
-## Project Structure
+This package is designed for scalability, customization, and accuracy, making it ideal for data engineers, NLP practitioners, and AI developers working with large-scale web content.
+
+---
+
+## ✨ Key Features
+
+- **🧹 Text Cleaning** – Remove noise patterns, unwanted metadata, and normalize formatting.
+
+- **🌍 Language Detection** – Auto-detect and filter by supported languages.
+
+- **🔍 Named Entity Recognition (NER)** – Extract entities such as organizations, people, locations, and products.
+
+- **📂 Content Categorization** – Classify text into domains like Services, Industries, or Company profiles.
+
+- **🏷️ Tag Extraction** – Generate relevant tags from both text and URLs.
+
+- **🧠 Topic Extraction** – Derive key topics from titles, URLs, and text.
+
+- **✂️ Intelligent Chunking** – Split text into overlapping, semantically coherent chunks.
+
+- **♻️ Deduplication** – Remove identical or highly similar content via content hashing.
+
+---
+
+## 📂 Project Structure
 
 ```
 preprocessor/
@@ -31,20 +47,24 @@ preprocessor/
 └── run_preprocessor.py                  # Main execution script
 ```
 
-## Installation
+---
+
+## ⚙️ Installation
 
 ### Prerequisites
 
 ```bash
 pip install nltk spacy langdetect
+
 python -m spacy download en_core_web_sm
+
 ```
 
-### NLTK Data
+>> **Note: NLTK data (e.g., punkt) is automatically downloaded on first run.**
 
-The package will automatically download required NLTK data (punkt tokenizer) on first use.
+---
 
-## Usage
+## 🚀 Usage
 
 ### Command Line Interface
 
@@ -52,7 +72,7 @@ The package will automatically download required NLTK data (punkt tokenizer) on 
 # Process a single JSONL file
 python run_preprocessor.py --input data/input.jsonl --output data/output.jsonl
 
-# Process all files in a directory
+# Process a directory of files
 python run_preprocessor.py --input data/input_dir --output data/output.jsonl --directory
 
 # With custom parameters
@@ -71,24 +91,20 @@ python run_preprocessor.py \
 ```python
 from preprocessor import Preprocessor
 
-# Initialize with default settings
+# Initialize
 preprocessor = Preprocessor(verbose=True)
 
-# Process a single JSONL file
-chunk_count = preprocessor.preprocess_jsonl_file(
-    input_file="data/input.jsonl",
-    output_file="data/output.jsonl"
-)
+# Process single file
+preprocessor.preprocess_jsonl_file("data/input.jsonl", "data/output.jsonl")
 
-# Process a directory of files
-chunk_count = preprocessor.preprocess_directory(
-    input_dir="data/input_directory",
-    output_path="data/combined_output.jsonl"
-)
+# Process multiple files in directory
+preprocessor.preprocess_directory("data/input_dir", "data/output.jsonl")
 
-# Process individual records
-record = {"content": "Your text content here", "url": "https://example.com"}
+# Process an individual record
+record = {"content" : "Sample text", "url" : "https://example.com"}
+
 chunks = preprocessor.process_record(record)
+
 ```
 
 ### Using Individual Components
@@ -96,33 +112,33 @@ chunks = preprocessor.process_record(record)
 ```python
 from preprocessor.core import TextCleaner, ChunkBuilder, NamedEntityRecognizer
 
-# Text cleaning
-cleaner = TextCleaner()
-cleaned_text = cleaner.clean_text(raw_text)
+# Clean text
+cleaned_text = TextCleaner().clean_text(raw_text)
 
-# Chunking
-chunk_builder = ChunkBuilder(max_tokens=512, overlap=50)
-chunks = chunk_builder.chunk_text(cleaned_text)
+# Create chunks
+chunks       = ChunkBuilder(max_tokens=512, overlap=50).chunk_text(cleaned_text)
 
-# Named entity recognition
-ner = NamedEntityRecognizer()
-entities = ner.extract_named_entities(text)
+# Extract entities
+entities     = NamedEntityRecognizer().extract_named_entities(cleaned_text)
 ```
 
-## Configuration
+---
+
+## ⚡ Configuration
 
 Create a `config.py` file to customize default settings:
 
 ```python
-# config.py
 MAX_TOKENS_PER_CHUNK = 512
-CHUNK_OVERLAP = 50
-MIN_CHUNK_LENGTH = 100
-LANGUAGE = "en"
-SKIP_PHRASES = ["custom phrase to skip"]
+CHUNK_OVERLAP        = 50
+MIN_CHUNK_LENGTH     = 100
+LANGUAGE             = "en"
+SKIP_PHRASES         = ["example footer", "advertisement"]
 ```
 
-## Input Format
+---
+
+## 📥 Input Format
 
 The preprocessor expects JSONL files where each line is a JSON object with at least a `content` field:
 
@@ -131,7 +147,9 @@ The preprocessor expects JSONL files where each line is a JSON object with at le
 {"content": "More content...", "url": "https://another-example.com"}
 ```
 
-## Output Format
+---
+
+## 📤 Output Format
 
 The preprocessor generates JSONL files with structured chunks:
 
@@ -149,55 +167,30 @@ The preprocessor generates JSONL files with structured chunks:
 }
 ```
 
-## Component Details
+---
 
-### TextCleaner
-- Removes web noise patterns (multiple newlines, spaces, pipe separators)
-- Filters out URLs, email addresses, and copyright notices
-- Normalizes punctuation and whitespace
+## 🔍 Component Overview
 
-### LanguageDetector
-- Uses `langdetect` library for language identification
-- Handles short text gracefully
-- Configurable default language fallback
+| Component                 | Purpose                                       | Tech                  |
+| ------------------------- | --------------------------------------------- | --------------------- |
+| **TextCleaner**           | Removes noise, URLs, emails, unwanted symbols | Regex                 |
+| **LanguageDetector**      | Identifies language, with fallback            | `langdetect`          |
+| **NamedEntityRecognizer** | Extracts ORG, PERSON, GPE, PRODUCT            | `spaCy`               |
+| **ContentCategorizer**    | Classifies by URL patterns & keywords         | Custom logic          |
+| **TagExtractor**          | Generates topic/tech tags                     | Custom keyword maps   |
+| **TopicExtractor**        | Multi-step topic generation                   | Title → URL → content |
+| **ChunkBuilder**          | Creates overlapping, sentence-aware chunks    | Token length-based    |
+| **Utils**                 | Hashing, text validation, stats               | Python stdlib         |
 
-### NamedEntityRecognizer
-- Uses spaCy's `en_core_web_sm` model
-- Extracts ORG, PERSON, GPE, and PRODUCT entities
-- Filters out common web noise entities
+---
 
-### ContentCategorizer
-- URL-based categorization using path patterns
-- Content-based categorization using keyword matching
-- Supports custom category definitions
-
-### TagExtractor
-- Extracts technology and business-related tags
-- Processes both URL paths and content
-- Supports custom keyword mappings
-
-### TopicExtractor
-- Multi-strategy topic extraction (title → URL → content)
-- Intelligent sentence selection for content-based topics
-- URL path component processing
-
-### ChunkBuilder
-- Sentence-aware chunking with configurable overlap
-- Content validation and deduplication
-- Comprehensive chunk quality filtering
-
-### Utils
-- Content hashing for deduplication
-- Text quality validation
-- Processing statistics
-
-## Advanced Usage
+## 🛠 Advanced Customization
 
 ### Custom Skip Phrases
 
 ```python
 custom_skip_phrases = ["custom footer text", "advertisement"]
-preprocessor = Preprocessor(skip_phrases=custom_skip_phrases)
+preprocessor        = Preprocessor(skip_phrases=custom_skip_phrases)
 ```
 
 ### Custom Categories and Tags
@@ -230,14 +223,21 @@ print(f"Total chunks: {total_chunks}")
 print(f"Unique content pieces: {stats['utils']['unique_content_hashes']}")
 ```
 
-## Performance Considerations
+---
 
-- **Memory Usage**: The deduplication system stores content hashes in memory
-- **Processing Speed**: NER is limited to first 1000 characters for efficiency
-- **Batch Size**: Process large files in chunks if memory is constrained
-- **Language Detection**: Skipped for very short texts to improve performance
+## 📊 Performance Tips
 
-## Logging
+- Use batch processing for large datasets.
+
+- Limit NER to first 1000 chars for speed.
+
+- Skip language detection for short texts.
+
+- Deduplication hashes are stored in-memory.
+
+---
+
+## 📝 Logging
 
 The package uses Python's built-in logging module. Set `verbose=True` for detailed processing information:
 
@@ -247,7 +247,9 @@ logging.basicConfig(level=logging.DEBUG)
 preprocessor = Preprocessor(verbose=True)
 ```
 
-## Error Handling
+---
+
+## 🛡 Error Handling
 
 The preprocessor includes comprehensive error handling:
 - Invalid JSON records are skipped with logging
@@ -264,3 +266,8 @@ The preprocessor includes comprehensive error handling:
 - `hashlib`: Content hashing for deduplication
 - `json`: JSON processing
 - `logging`: Comprehensive logging
+
+---
+
+*This project showcases practical skills in web scraping, data processing, and software architecture. It demonstrates the ability to build production-ready tools with clean, maintainable code while considering ethical scraping practices and scalability challenges.*
+

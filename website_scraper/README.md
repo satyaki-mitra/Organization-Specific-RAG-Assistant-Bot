@@ -4,92 +4,99 @@
 [![Scrapy](https://img.shields.io/badge/Scrapy-2.11%2B-green.svg)](https://scrapy.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> **A robust web scraping solution that transforms websites into structured data with intelligent content extraction and automated data cleaning pipelines.**
+> **A production-grade, modular web scraping framework that transforms unstructured web pages into clean, structured datasets with intelligent content extraction and automated data cleaning.**
+
+----
 
 ## 🎯 Project Overview
 
-This project demonstrates a complete web scraping solution built with **Scrapy** framework, showcasing modern Python development practices, clean architecture, and production-ready data processing pipelines. Originally developed to extract data from ITobuz Technologies website, it's designed to be flexible and scalable for any website.
+A full-featured scraping solution powered by Scrapy, designed for:
 
-### 🌟 What Makes This Project Stand Out
+- **Scalability** → Handles large, deep crawls efficiently
 
-- **Clean Architecture**: Modular design following SOLID principles
-- **Production-Ready Pipelines**: Data validation, cleaning, and deduplication
-- **Intelligent Extraction**: Smart content parsing with metadata extraction
-- **Structured Output**: Professional JSONL format for data analysis
-- **Respectful Scraping**: Implements ethical scraping practices
-- **Error Handling**: Comprehensive logging and retry mechanisms
+- **Flexibility** → Works across varied website structures
 
-## 🔧 Technical Skills Demonstrated
+- **Data Quality** → Enforces cleaning, validation, and deduplication
 
-### Core Technologies
-- **Python 3.8+** - Modern Python development
-- **Scrapy Framework** - Industrial-strength web scraping
-- **Regular Expressions** - Text processing and cleaning
-- **JSON/JSONL** - Data serialization and storage
-- **Object-Oriented Design** - Clean, maintainable code structure
+This tool is ideal for research, analytics, content monitoring, or any workflow that needs structured data from the web.
 
-### Software Engineering Practices
-- **Modular Architecture** - Separation of concerns
-- **Data Pipeline Design** - ETL processes
-- **Configuration Management** - Settings-driven behavior
-- **Error Handling** - Graceful failure management
-- **Code Documentation** - Self-documenting code
+---
+
+### 🌟 Key Features
+
+- **Modular Architecture**: Clean separation of concerns with base classes and utilities
+
+- **Intelligent Extraction**: 
+  - Content segmentation by headings (H1-H6)
+  - Metadata extraction (Open Graph, SEO tags)
+  - Smart content combination from multiple HTML elements
+
+- **Data Quality Pipeline**:
+  - Text normalization and cleaning
+  - Length validation and truncation
+  - Comprehensive error handling
+
+- **Respectful Crawling**:
+  - Configurable delays and concurrency
+  - robots.txt compliance
+  - Automatic throttling
+
+----
 
 ## 🚀 Quick Start
 
-### Installation
+### 1. Navigate to the project folder
 ```bash
-# Clone the repository
-git clone https://github.com/satyaki-mitra/website-scraper.git
-cd website-scraper
+cd website_scraper
+```
 
-# Install dependencies
+### 2. Install dependencies
+```bash
 pip install scrapy itemadapter
+```
 
-# Create output directory
-mkdir -p data
+### 3. Run the scraper programmatically
+Update company_url and output_file in the script (or pass them as arguments if you adapt it for CLI):
 
-# Run the scraper
+```python
+if __name__ == "__main__":
+    company_url = "https://example.com"
+    output_file = "outputs/data.jsonl"
+
+    scrape(start_url   = company_url, 
+           output_file = output_file,
+          )
+```
+
+### 4. Run the scraper (default: itobuz.com)
+```bash 
 python run_scraper.py
 ```
 
-### Project Structure
+### 5. Output & Logs
+- Scraped data will be saved in outputs/data.jsonl (JSON Lines format).
+
+- Logs will be saved under ../logs/scraper_logs/ with a timestamped filename.
+
+---
+
+## Project Structure
 ```
 website-scraper/
 ├── run_scraper.py              # Main entry point
 ├── scrapy.cfg                  # Scrapy configuration
 ├── data/                       # Output directory
-└── website_scraper/
-    ├── settings.py            # Scraping configuration
-    ├── pipelines.py           # Data processing pipelines
+└── scraper/
+    ├── settings.py             # Scraping configuration
+    ├── pipelines.py            # Data processing pipelines
     ├── spiders/
-    │   ├── base_spider.py     # Base spider class
-    │   └── website_spider.py  # Main extraction logic
+    │   ├── base_spider.py      # Base spider class
+    │   └── website_spider.py   # Main extraction logic
     └── utils/
-        └── url_helpers.py     # URL processing utilities
+        └── url_helpers.py      # URL processing utilities
 ```
 
-## 📊 Data Output Example
-
-The scraper produces clean, structured data in JSONL format:
-
-```json
-{
-  "url": "https://itobuz.com/services",
-  "page_title": "Custom Web & Mobile App Development Services",
-  "heading": "Our Services",
-  "content": "We provide comprehensive development solutions including custom web applications, mobile app development, and enterprise software solutions...",
-  "content_type": "general",
-  "priority": 0,
-  "meta": {
-    "title": "Custom Web & Mobile App Development Services",
-    "description": "Leading app development services helping brands achieve digital transformation...",
-    "og_title": "Custom Web & Mobile App Development Services",
-    "og_description": "Leading app development services...",
-    "og_site_name": "Itobuz"
-  }
-}
-```
+--- 
 
 ## 🛠️ Key Components
 
@@ -117,6 +124,8 @@ The scraper produces clean, structured data in JSONL format:
 - Respectful crawling settings (delays, concurrent requests)
 - Pipeline configuration and priorities
 
+---
+
 ## ⚙️ Configuration Options
 
 ```python
@@ -131,64 +140,25 @@ AUTOTHROTTLE_ENABLED = True     # Dynamic rate adjustment
 RETRY_TIMES = 3                 # Fault tolerance
 ```
 
+---
+
 ## 🎯 Problem-Solving Approach
 
-### Challenge: Extracting Meaningful Content
-**Solution**: Implemented intelligent content extraction that:
-- Identifies semantic HTML elements
-- Combines text from multiple sources
-- Maintains content-heading relationships
-- Preserves metadata context
+| Challenge                     | Solution                                           |
+| ----------------------------- | -------------------------------------------------- |
+| Extracting meaningful content | Semantic HTML parsing + heading-based segmentation |
+| Data consistency              | Cleaning, deduplication, and strict validation     |
+| Scalability                   | Modular spiders, pipelines, and utilities          |
 
-### Challenge: Data Quality & Consistency
-**Solution**: Built comprehensive data pipelines that:
-- Clean and normalize text content
-- Remove duplicates intelligently
-- Validate data completeness
-- Log quality metrics
+---
 
-### Challenge: Scalable Architecture
-**Solution**: Designed modular system with:
-- Reusable base spider class
-- Configurable extraction logic
-- Pluggable pipeline system
-- Utility functions for common tasks
+## 📌 Notes
 
-## 🚧 Current Limitations
+- Doesn’t handle JavaScript-rendered content (needs Playwright/Selenium integration)
 
-### Technical Limitations
-- **JavaScript Content**: Cannot extract dynamically loaded content (would need Selenium/Playwright integration)
-- **Rate Limiting**: Basic delay-based throttling (could implement more sophisticated algorithms)
-- **Content Analysis**: Limited semantic understanding (could add NLP for content classification)
-- **Storage**: File-based output only (no database integration yet)
+- Currently outputs to files only (DB support can be added)
 
-### Scalability Constraints
-- **Memory Usage**: Loads full page content into memory
-- **Concurrent Processing**: Limited by target server capacity
-- **Error Recovery**: Basic retry mechanism (could implement exponential backoff)
-- **Monitoring**: Limited real-time metrics (no dashboard/alerting)
-
-### Data Quality Issues
-- **Content Duplication**: May capture similar content from different pages
-- **Noise Filtering**: Includes navigation/footer content in extraction
-- **Language Detection**: No automatic language identification
-- **Content Scoring**: No relevance/importance ranking system
-
-## 🔮 Next Steps
-
-Some areas for potential improvement:
-- **JavaScript Content**: Add Selenium integration for dynamic content
-- **Database Storage**: PostgreSQL/MongoDB for better data management  
-- **Content Filtering**: Implement noise reduction algorithms
-- **Monitoring Dashboard**: Real-time scraping metrics and alerts
-
-## 📈 Performance Metrics
-
-Current performance on ITobuz website:
-- **Extraction Rate**: ~50 pages per minute
-- **Success Rate**: 95%+ (depends on network conditions)
-- **Data Quality**: 90%+ valid entries after pipeline processing
-- **Memory Usage**: ~100MB for typical website crawl
+- Basic throttling—can be upgraded with advanced rate-limiting
 
 ---
 

@@ -56,7 +56,7 @@ pip install scrapy itemadapter
 ```
 
 ### 3. Run the scraper programmatically
-Update company_url and output_file in the script (or pass them as arguments if you adapt it for CLI):
+Update **company_url** and **output_file** in the script **run_scraper.py**:
 
 ```python
 if __name__ == "__main__":
